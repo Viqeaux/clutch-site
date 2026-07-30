@@ -1,0 +1,6 @@
+# Repo/deploy management files — not part of the actual site content
+.git
+.gitignore
+.assetsignore
+wrangler.toml
+README.md
