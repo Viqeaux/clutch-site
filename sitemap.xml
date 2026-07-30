@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Replace REPLACE-WITH-YOUR-DOMAIN below with your real domain once it's
-  live (e.g. https://theclutchcomic.com), then update robots.txt to allow
-  crawling and point at this file.
+  URLs point at clutch-site.theclutchcomic.workers.dev, the site's current
+  address. If you ever move to a custom domain, ask to have this (and
+  robots.txt) updated to match.
 
   This list is hand-written, not auto-generated — if you add a new issue,
   character, or campaign later, ask to have this regenerated to match.
@@ -10,105 +10,105 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/meet-the-clutch.html</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/meet-the-clutch.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/how-its-made.html</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/how-its-made.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/campaign.html?id=expedition-barrier-peaks</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/campaign.html?id=expedition-barrier-peaks</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=1</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=1</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=2</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=2</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=3</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=3</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=4</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=4</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=5</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=5</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=6</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=6</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=7</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/reader.html?issue=7</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=alfie</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=alfie</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=tom-jones</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=tom-jones</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=vigeaux-the-carcajian</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=vigeaux-the-carcajian</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=wyatt-smithereen</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=wyatt-smithereen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=derder-erder</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=derder-erder</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=snivel-sarcat</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=snivel-sarcat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=willa</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=willa</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=gary-smithereen</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=gary-smithereen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=vohnkar-nelwyn</loc>
+    <loc>https://clutch-site.theclutchcomic.workers.dev/character.html?slug=vohnkar-nelwyn</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
