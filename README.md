@@ -1,83 +1,96 @@
 # The Clutch — site
 
+Live at: https://clutch-site.theclutchcomic.workers.dev
+
 ## To view it on your computer
 
-Just double-click **index.html**. It'll open in your browser. That's it —
-no server, no terminal, nothing to install.
+Just double-click **index.html**. It'll open in your browser, no server or
+install needed. (Live character stats won't load this way since browsers
+block that kind of request from a local file — you'll see the saved
+snapshot instead, which is normal.)
 
-(Reopen it any time the same way, or bookmark the file.)
+## To add a new issue
 
-## To add panels to an issue
+Say you're adding Issue 10:
 
-Say you're adding pages to Issue 7:
+1. Create `panels/issue-10/` and drop the page images in (PNG or JPG),
+   named so they sort in order — `p1.png`, `p2.png`, `p3.png`... A file
+   named `cover` (`.jpg`/`.jpeg`/`.png`/`.webp`) is optional and becomes
+   the thumbnail on the archive page.
 
-1. Copy your page images (PNG or JPG) into the `panels/issue-07/` folder.
-   Name them something you can put in order, like `page-01.png`,
-   `page-02.png`, `page-03.png`...
-
-2. Open `panels/issue-07/manifest.js` in a plain text editor (Notepad on
-   Windows, TextEdit on Mac — set to plain text mode, not rich text).
-
-3. It looks like this:
+2. In that same folder, create `manifest.js`:
 
    ```
    window.CLUTCH_MANIFEST = {
-     "issue": 7,
-     "pages": []
-   };
-   ```
-
-4. Type your filenames into the `"pages": []` part, in the order you want
-   them read, like this:
-
-   ```
-   window.CLUTCH_MANIFEST = {
-     "issue": 7,
+     "issue": 10,
      "pages": [
-       "page-01.png",
-       "page-02.png",
-       "page-03.png"
+       "cover.png",
+       "p1.png",
+       "p2.png",
+       "p3.png"
      ]
    };
    ```
 
-   Each filename needs quotes around it and a comma after it (except the
-   last one). Save the file.
+   List filenames in reading order, each in quotes with a comma after
+   (except the last). If you list a page here before the image exists yet,
+   it's fine — the site just skips anything it can't find rather than
+   showing a broken image.
 
-5. Double-click `index.html` again (or hit refresh if it's already open).
-   Issue 7 should now show a page count instead of "awaiting panels," and
-   clicking into it opens the reader with your pages.
+3. **Don't skip this step** — open `data/issues.js` and add an entry to
+   the active campaign's `issues` array:
 
-**Optional cover image:** drop a file named `cover` into `panels/issue-07/`
-— `.jpg`, `.jpeg`, `.png`, or `.webp` all work — and it'll automatically
-show as the thumbnail on the archive page.
+   ```
+   { "id": 10, "number": 10, "title": "Issue 10", "folder": "issue-10" }
+   ```
 
-## To rename an issue's title
+   The manifest alone isn't enough — this is the part that actually makes
+   the site aware the issue exists. (This has been the cause of "why isn't
+   my new issue showing up" every time so far.)
 
-Open `data/issues.js` in a text editor. Each issue has a `"title"` field —
-change the text between the quotes, save, refresh.
+4. Refresh the site. The homepage cover automatically shows whichever
+   issue has the highest number, so a new issue becomes the featured one
+   as soon as it's registered.
 
-## Reader controls
+## To rename an issue's title, or start a new campaign
 
-- Click the left or right edge of the page, or use the arrow keys / spacebar
-- The thumbnail strip at the bottom jumps to any page
-- The counter in the top bar shows where you are in the issue
+Both are edited in `data/issues.js` — there's a comment at the top of that
+file explaining the campaign structure and the rule about issue numbers
+always counting up, never restarting.
 
-## Putting it on your buddy's hosting
+## Characters
 
-Once he gives you access (either cPanel or FTP login):
+- Stats pull live from the party's Google Sheet (`js/characters-shared.js`
+  has the sheet ID). If that fetch fails — no internet, sheet made
+  private, viewing the site as a local file — it falls back to the saved
+  snapshot in `data/characters.js`.
+- Personality blurbs aren't on the sheet — they live in
+  `data/character-notes.js`, keyed by character slug.
+- Portrait photos go in `characters/`, named to match either the
+  character's first name or full slug (see `characters/README.txt`).
+- A character marked `"status": "resting"` in the sheet is hidden from
+  the Meet The Clutch gallery but still has a working page if linked
+  directly.
 
-**cPanel:** log in, open **File Manager**, go to `public_html` (or
-whatever folder he tells you to use), and upload everything that's
-*inside* this `clutch-site` folder — `index.html`, `css/`, `js/`, `data/`,
-`panels/` — directly into that folder.
+## Reader
 
-**FTP:** use a free program like [FileZilla](https://filezilla-project.org/),
-connect with the login he gives you, and drag the same files over into
-`public_html`.
+Issue pages show as a click-through grid; clicking a page opens it in a
+full-screen lightbox with page-flip animation between pages, pinch/scroll/
+double-click zoom, and drag-to-pan while zoomed in.
 
-Updating later is the same either way: overwrite the changed file(s) on
-the server. No rebuilding, no redeploying — it's just files.
+## Updating the live site
+
+This folder is a git repo connected to Cloudflare (auto-deploys on push
+to `main`). The usual flow, once changes are ready:
+
+```
+git add -A
+git commit -m "describe the change"
+git push
+```
+
+Cloudflare picks it up and it's live within about a minute — no manual
+uploading, no dragging folders anywhere.
 
 ## Before uploading your real art
 
