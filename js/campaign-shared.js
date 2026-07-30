@@ -27,10 +27,17 @@ function checkImageExists(src) {
 }
 
 async function findCover(folder) {
-  const candidates = ['cover.jpg', 'cover.jpeg', 'cover.png', 'cover.webp'];
-  for (const name of candidates) {
-    const src = `panels/${folder}/${name}`;
-    if (await checkImageExists(src)) return src;
+  // Try common casings too — file hosts vary on this (Windows doesn't care,
+  // but Cloudflare and most real web servers are case-sensitive), and this
+  // site's cover files aren't consistently named (Cover.png, cover.png,
+  // COVER.png all show up across issues).
+  const names = ['cover', 'Cover', 'COVER'];
+  const exts = ['jpg', 'jpeg', 'png', 'webp'];
+  for (const ext of exts) {
+    for (const name of names) {
+      const src = `panels/${folder}/${name}.${ext}`;
+      if (await checkImageExists(src)) return src;
+    }
   }
   return null;
 }
