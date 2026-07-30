@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Clutch — Reader</title>
+<meta name="description" content="Read an issue of The Clutch, a comic drawn from a real D&D group's actual-play sessions.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Clutch">
+<meta property="og:title" content="The Clutch — Reader">
+<meta property="og:description" content="Read an issue of The Clutch, a comic drawn from a real D&D group's actual-play sessions.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Clutch — Reader">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <h1 class="site-title"><a href="index.html">The Clutch</a></h1>
+  <div class="site-subtitle">Tales from the Table</div>
+  <div class="header-rule"></div>
+</header>
+
+<main class="archive-wrap">
+  <a class="back-link" href="index.html">&larr; Archive</a>
+
+  <div class="campaign-heading">
+    <h2 class="campaign-name" id="issue-label">Issue —</h2>
+    <span class="character-source-note" id="page-count-note"></span>
+  </div>
+
+  <div class="page-grid" id="page-grid" aria-live="polite"></div>
+</main>
+
+<div class="lightbox-overlay reader-lightbox" id="page-lightbox" hidden>
+  <button type="button" class="lightbox-close" id="page-lightbox-close" aria-label="Close">&times;</button>
+  <span class="reader-lightbox-counter" id="page-counter">— / —</span>
+  <div class="reader-stage" id="reader-stage">
+    <!-- populated by js/reader.js -->
+  </div>
+</div>
+
+<script src="data/issues.js"></script>
+<script src="js/reader.js"></script>
+<script src="js/site-nav.js"></script>
+</body>
+</html>

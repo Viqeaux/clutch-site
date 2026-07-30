@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Clutch — Campaign</title>
+<meta name="description" content="Browse the issues in this campaign of The Clutch, a comic drawn from a real D&D group's actual-play sessions.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Clutch">
+<meta property="og:title" content="The Clutch — Campaign">
+<meta property="og:description" content="Browse the issues in this campaign of The Clutch, a comic drawn from a real D&D group's actual-play sessions.">
+<meta property="og:image" content="panels/issue-07/cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Clutch — Campaign">
+<meta name="twitter:image" content="panels/issue-07/cover.png">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <h1 class="site-title"><a href="index.html">The Clutch</a></h1>
+  <div class="site-subtitle" id="arc-label">Tales from the Table</div>
+  <div class="header-rule"></div>
+</header>
+
+<main class="archive-wrap">
+  <a class="back-link" href="index.html">&larr; Archive</a>
+
+  <div class="campaign-heading">
+    <span class="status-tag ready" id="campaign-status">Current Campaign</span>
+    <h2 class="campaign-name" id="campaign-name">—</h2>
+  </div>
+
+  <div id="issue-grid" class="issue-grid" aria-live="polite"></div>
+
+  <section class="plate empty-note" id="global-empty-note" hidden>
+    <h2>No panels loaded yet</h2>
+    <p>
+      Drop your page images into each issue's folder — for example
+      <code>panels/issue-01/page-01.png</code> — then list the filenames,
+      in reading order, inside that issue's <code>manifest.json</code>.
+      Covers work the same way: add <code>cover.jpg</code> to an issue
+      folder and it'll show up here automatically.
+    </p>
+  </section>
+</main>
+
+<script src="data/issues.js"></script>
+<script src="js/campaign-shared.js"></script>
+<script src="js/campaign.js"></script>
+<script src="js/site-nav.js"></script>
+</body>
+</html>

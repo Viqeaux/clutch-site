@@ -1,0 +1,10 @@
+# Site is still in development — not ready to be indexed yet.
+# Once the real domain is live and you want this discoverable,
+# replace the block below with:
+#
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://REPLACE-WITH-YOUR-DOMAIN/sitemap.xml
+
+User-agent: *
+Disallow: /

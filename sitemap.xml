@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Replace REPLACE-WITH-YOUR-DOMAIN below with your real domain once it's
+  live (e.g. https://theclutchcomic.com), then update robots.txt to allow
+  crawling and point at this file.
+
+  This list is hand-written, not auto-generated — if you add a new issue,
+  character, or campaign later, ask to have this regenerated to match.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/meet-the-clutch.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/how-its-made.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/campaign.html?id=expedition-barrier-peaks</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=1</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=2</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=3</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=4</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=5</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=6</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/reader.html?issue=7</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=alfie</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=tom-jones</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=vigeaux-the-carcajian</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=wyatt-smithereen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=derder-erder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=snivel-sarcat</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=willa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=gary-smithereen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/character.html?slug=vohnkar-nelwyn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
