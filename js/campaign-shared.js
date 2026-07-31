@@ -102,18 +102,48 @@ function issueRowHTML(issue, info) {
   `;
 }
 
+// "Issue 2" / "Issues 2 and 5" / "Issues 2, 5, and 7"
+function joinIssueLabels(issues) {
+  const labels = issues.map(i => `Issue ${i.number}`);
+  if (labels.length === 1) return labels[0];
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
+  return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`;
+}
+
 async function renderIssueGrid(campaign, grid, globalEmptyNote) {
-  let anyEmpty = false;
+  const emptyIssues = [];
   const cards = [];
 
   for (const issue of campaign.issues) {
     const info = await loadIssueInfo(issue);
-    if (info.pageCount === 0) anyEmpty = true;
+    if (info.pageCount === 0) emptyIssues.push(issue);
     cards.push(issueCardHTML(issue, info));
   }
 
   grid.innerHTML = cards.join('');
-  if (anyEmpty && globalEmptyNote) globalEmptyNote.hidden = false;
+
+  if (emptyIssues.length > 0 && globalEmptyNote) {
+    // Name the actual empty issue(s) and use a real folder from among them
+    // as the example path, instead of a generic "issue-01" placeholder —
+    // confusing when issue 1 itself already has content.
+    const exampleFolder = emptyIssues[0].folder;
+    const isAre = emptyIssues.length === 1 ? 'is' : 'are';
+    const itsTheir = emptyIssues.length === 1 ? 'its' : 'their';
+    const heading = globalEmptyNote.querySelector('h2');
+    const body = globalEmptyNote.querySelector('p');
+    if (heading) heading.textContent = `${joinIssueLabels(emptyIssues)} ${isAre} missing ${itsTheir} panels`;
+    if (body) {
+      body.innerHTML = `
+        Drop the page images into <code>panels/${exampleFolder}/</code> —
+        for example <code>panels/${exampleFolder}/p1.png</code> — then list
+        the filenames, in reading order, inside
+        <code>panels/${exampleFolder}/manifest.js</code>. Covers work the
+        same way: add <code>cover.jpg</code> to the folder and it'll show
+        up here automatically.
+      `;
+    }
+    globalEmptyNote.hidden = false;
+  }
 }
 
 function campaignTabHTML(campaign) {
