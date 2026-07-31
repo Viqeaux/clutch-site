@@ -102,6 +102,57 @@ page and the `clutch_automation` pipeline can read. It's kept in sync with
 (but is not the same file as) `clutch_automation/instructions/Character_Arcs.md`,
 which is the fuller session-by-session log the table keeps during play.
 
+## DM Toolkit
+
+`toolkit/` is a hosted copy of the Dungeon Master's Toolkit — a big
+self-contained offline bundle (spell library, maps, party portraits). It's
+deliberately untouched/unmodified when copied in: no live data, no site
+styling, just the toolkit as authored. Update it with:
+
+```
+.\sync-toolkit.ps1
+```
+
+which re-copies it from `Unified DM workspace (1)/DM Toolkit Folder` and
+renames its HTML to `index.html`. Run with `-DryRun` first to preview, or
+`-SourceDir` if that folder isn't in its usual place.
+
+### It's gated behind a password (not Cloudflare Access)
+
+`/toolkit` is protected by HTTP Basic Auth, enforced server-side in
+`worker.js` — the browser's native login prompt, one shared
+username/password. The password is never shipped to the browser (unlike a
+JS-based prompt, there's nothing to find by viewing page source), but it's
+also not per-person and there's no login audit trail. Good enough to keep
+this off search engines and out of randoms' hands; not meant to withstand
+a determined, targeted attacker. (Cloudflare Access — real per-person
+login — was the original plan, but it wanted a credit card on file even
+for the free tier, so this is the no-cost alternative.)
+
+**One-time setup**, from this folder, after `wrangler login`:
+
+```
+wrangler secret put TOOLKIT_PASSWORD
+```
+
+It'll prompt you to type the real password directly into your terminal —
+it's stored on Cloudflare's side and never written into this repo. The
+username is hardcoded in `worker.js` as `clutch` (not a secret — change it
+there directly if you want something else).
+
+`wrangler.toml` has `run_worker_first = ["/toolkit", "/toolkit/*"]` so only
+requests to those paths run through `worker.js` at all — every other page
+on the site is still served directly as a static file, same as before.
+
+If the secret is ever unset (fresh deploy before running the command
+above), the toolkit fails closed with a 500 rather than serving the
+content unprotected — but set it before your first deploy of `toolkit/`
+so there's no window where it's reachable at all.
+
+For local testing only: `.dev.vars` (gitignored, never deployed) holds a
+throwaway password for `wrangler dev` — that file is not the real secret
+and doesn't need to match it.
+
 ## Reader
 
 Issue pages show as a click-through grid; clicking a page opens it in a

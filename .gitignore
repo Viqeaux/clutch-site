@@ -1,2 +1,8 @@
 # Claude Code local settings — not part of the site
 .claude/
+
+# Local-only secrets for `wrangler dev` — never the real password, never committed
+.dev.vars
+
+# wrangler's local dev cache/state — not part of the site
+.wrangler/

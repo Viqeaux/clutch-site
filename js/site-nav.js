@@ -7,6 +7,7 @@
     { href: 'index.html', label: 'Archive', files: ['index.html', ''] },
     { href: 'meet-the-clutch.html', label: 'Meet The Clutch', files: ['meet-the-clutch.html'] },
     { href: 'how-its-made.html', label: "How It's Made", files: ['how-its-made.html'] },
+    { href: 'toolkit/', label: 'DM Toolkit', files: [] },
   ];
 
   function currentFile() {
