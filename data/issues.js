@@ -20,15 +20,60 @@ window.CLUTCH_DATA = {
       "name": "Expedition to the Barrier Peaks",
       "status": "active",
       "issues": [
-        { "id": 1, "number": 1, "title": "Issue 1", "folder": "issue-01" },
-        { "id": 2, "number": 2, "title": "Issue 2", "folder": "issue-02" },
-        { "id": 3, "number": 3, "title": "Issue 3", "folder": "issue-03" },
-        { "id": 4, "number": 4, "title": "Issue 4", "folder": "issue-04" },
-        { "id": 5, "number": 5, "title": "Issue 5", "folder": "issue-05" },
-        { "id": 6, "number": 6, "title": "Issue 6", "folder": "issue-06" },
-        { "id": 7, "number": 7, "title": "Issue 7", "folder": "issue-07" },
-        { "id": 8, "number": 8, "title": "Issue 8", "folder": "issue-08" },
-        { "id": 9, "number": 9, "title": "Issue 9", "folder": "issue-09" }
+        {
+          "id": 1,
+          "number": 1,
+          "title": "Issue 1",
+          "folder": "issue-01"
+        },
+        {
+          "id": 2,
+          "number": 2,
+          "title": "Issue 2",
+          "folder": "issue-02"
+        },
+        {
+          "id": 3,
+          "number": 3,
+          "title": "Issue 3",
+          "folder": "issue-03"
+        },
+        {
+          "id": 4,
+          "number": 4,
+          "title": "Issue 4",
+          "folder": "issue-04"
+        },
+        {
+          "id": 5,
+          "number": 5,
+          "title": "Issue 5",
+          "folder": "issue-05"
+        },
+        {
+          "id": 6,
+          "number": 6,
+          "title": "Issue 6",
+          "folder": "issue-06"
+        },
+        {
+          "id": 7,
+          "number": 7,
+          "title": "Issue 7",
+          "folder": "issue-07"
+        },
+        {
+          "id": 8,
+          "number": 8,
+          "title": "Issue 8",
+          "folder": "issue-08"
+        },
+        {
+          "id": 9,
+          "number": 9,
+          "title": "Issue 9",
+          "folder": "issue-09"
+        }
       ]
     }
   ]
