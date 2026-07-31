@@ -9,9 +9,24 @@ install needed. (Live character stats won't load this way since browsers
 block that kind of request from a local file — you'll see the saved
 snapshot instead, which is normal.)
 
-## To add a new issue
+## To add a new issue (automated)
 
-Say you're adding Issue 10:
+If the issue came out of the `clutch_automation` pipeline (GPT Image
+Generator/clutch_automation), don't do this by hand — run:
+
+```
+python publish_issue.py --issue 10
+```
+
+from `clutch_automation/`. It resizes the pages, writes `manifest.js`, adds
+the entry to `data/issues.js` (the step everyone used to forget), copies any
+updated character portraits, and stages everything with `git add` in this
+repo — but does not commit or push, so you can review the art first. See
+`clutch_automation/README.md` for details.
+
+## To add a new issue (manual)
+
+Say you're adding Issue 10 by hand:
 
 1. Create `panels/issue-10/` and drop the page images in (PNG or JPG),
    named so they sort in order — `p1.png`, `p2.png`, `p3.png`... A file
@@ -71,6 +86,21 @@ always counting up, never restarting.
 - A character marked `"status": "resting"` in the sheet is hidden from
   the Meet The Clutch gallery but still has a working page if linked
   directly.
+- Character *appearance* (for keeping art prompts consistent — outfit,
+  colors, distinguishing details) lives in `data/character-art-notes.js`.
+  This is a different thing from stats or personality, and it's the
+  canonical file both this site and the `clutch_automation` image-gen
+  pipeline read — edit it, don't edit the old docx/PDF in the GPT Image
+  Generator folder, which are historical only now.
+
+## World Bible
+
+Campaign lore — locations, recurring threats, notable items, open plot
+threads — lives in `data/world-bible.js`. Same deal as the character art
+notes: this is the canonical, human-edited copy that both a future site
+page and the `clutch_automation` pipeline can read. It's kept in sync with
+(but is not the same file as) `clutch_automation/instructions/Character_Arcs.md`,
+which is the fuller session-by-session log the table keeps during play.
 
 ## Reader
 
