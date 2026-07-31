@@ -18,7 +18,15 @@
 .PARAMETER SourceDir
     Path to the DM Toolkit Folder. Defaults to
     "..\..\Unified DM workspace (1)\DM Toolkit Folder" relative to this
-    script - override if your folders aren't laid out the same way.
+    script - override if your folders aren't laid out the same way. If
+    that folder is a git repo (it is, as of the dm-toolkit GitHub repo),
+    this pulls the latest there first, so you always sync whatever the
+    team's most recently pushed - including Matt's "Update Toolkit"
+    button runs - without a separate manual git pull step.
+
+.PARAMETER SkipPull
+    Don't pull the source folder even if it's a git repo - just sync
+    whatever's there right now.
 
 .PARAMETER DryRun
     Print what would happen without changing anything on disk.
@@ -31,6 +39,7 @@
 #>
 param(
     [string]$SourceDir = (Join-Path $PSScriptRoot "..\..\Unified DM workspace (1)\DM Toolkit Folder"),
+    [switch]$SkipPull,
     [switch]$DryRun
 )
 
@@ -84,6 +93,32 @@ Write-Host "[SYNC-TOOLKIT] Source: $SourceDir"
 Write-Host "[SYNC-TOOLKIT] Dest:   $DestDir"
 if ($DryRun) { Write-Host "[SYNC-TOOLKIT] Mode:   DRY RUN - nothing will be changed`n" }
 else { Write-Host "" }
+
+$sourceIsGitRepo = Test-Path -LiteralPath (Join-Path $SourceDir ".git")
+if ($sourceIsGitRepo -and -not $SkipPull) {
+    if ($DryRun) {
+        Write-Host "[SYNC-TOOLKIT] Would pull the latest from git in $SourceDir first"
+    } else {
+        Write-Host "[SYNC-TOOLKIT] Source is a git repo - pulling the latest first..."
+        # Best-effort: git writes "Already on 'main'" etc. to stderr, which
+        # PowerShell can treat as a terminating error under
+        # $ErrorActionPreference = "Stop" even though it's not a real
+        # failure - wrap in try/catch rather than relying on 2>$null.
+        try { git -C $SourceDir checkout main 2>&1 | Out-Null } catch {}
+        # Known quirk on this git/Windows combo: a pull can leave behind a
+        # stale .lock file (AUTO_MERGE.lock, packed-refs.lock, etc.) without
+        # cleaning it up, which then blocks the *next* pull with a
+        # scary-looking (but harmless) lock error. If nothing else is using
+        # this repo right now, any .lock file sitting in .git/ is stale -
+        # clear them all first so this doesn't compound run after run.
+        Get-ChildItem -LiteralPath (Join-Path $SourceDir ".git") -Filter "*.lock" -Recurse -ErrorAction SilentlyContinue |
+            Remove-Item -Force -ErrorAction SilentlyContinue
+        git -C $SourceDir pull origin main
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "git pull failed in $SourceDir - continuing with whatever's on disk there now. Run with -SkipPull to silence this, or fix the pull manually first."
+        }
+    }
+}
 
 # Find the toolkit's main HTML file. Named "Dungeon Master's Toolkit.html" as
 # of this writing, but matched loosely (any .html directly in the source

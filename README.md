@@ -107,15 +107,24 @@ which is the fuller session-by-session log the table keeps during play.
 `toolkit/` is a hosted copy of the Dungeon Master's Toolkit — a big
 self-contained offline bundle (spell library, maps, party portraits). It's
 deliberately untouched/unmodified when copied in: no live data, no site
-styling, just the toolkit as authored. Update it with:
+styling, just the toolkit as authored (renamed to `app.html`, with a thin
+`index.html` wrapper adding the "back to the site" bar). Update it with:
 
 ```
 .\sync-toolkit.ps1
 ```
 
-which re-copies it from `Unified DM workspace (1)/DM Toolkit Folder` and
-renames its HTML to `index.html`. Run with `-DryRun` first to preview, or
-`-SourceDir` if that folder isn't in its usual place.
+**How the toolkit's content itself gets updated:** `Unified DM workspace
+(1)/DM Toolkit Folder` — the folder this pulls from — is its own git repo
+(github.com/Viqeaux/dm-toolkit), so multiple people can contribute without
+clobbering each other. Matt (who builds the toolkit bundle) has an
+"Update Toolkit" button that pulls the latest, replaces the repo's
+contents with his fresh export, and pushes — no git commands for him to
+learn. `sync-toolkit.ps1` pulls that repo's latest automatically before
+syncing, so you're always grabbing whatever's newest on GitHub, not
+whatever happened to be sitting in the folder last. Run with `-DryRun`
+first to preview, `-SourceDir` if that folder isn't in its usual place, or
+`-SkipPull` to sync whatever's on disk right now without pulling first.
 
 ### It's gated behind a password (not Cloudflare Access)
 
