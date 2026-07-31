@@ -190,3 +190,15 @@ save as `.jpg` or `.webp` instead of `.png`. That alone usually cuts file
 size by 70–90% with no visible difference on screen, and keeps things
 fast to upload and load. Keep your full-res originals wherever you
 already store them — the site only needs the smaller copies.
+
+`clutch_automation/publish_issue.py` does this automatically (defaults to
+WebP now — smaller than JPG at equivalent quality, universal browser
+support). If you ever need to retroactively convert issues that were
+published before this existed (or as raw PNG for any other reason), run
+`clutch_automation/optimize_published_panels.py` — it converts every
+`panels/issue-*/` folder still holding PNGs, rewrites each `manifest.js`
+to match, and stages the change (same "review before you push" pattern as
+everything else here). One thing it can't see: cover images some issues
+reference outside the manifest (found by `js/campaign-shared.js`'s
+`findCover()` scanning for `cover`/`Cover`/`COVER` + any extension) — check
+for those by hand with `find panels -iname "*.png"` after running it.
