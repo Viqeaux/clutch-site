@@ -202,3 +202,23 @@ everything else here). One thing it can't see: cover images some issues
 reference outside the manifest (found by `js/campaign-shared.js`'s
 `findCover()` scanning for `cover`/`Cover`/`COVER` + any extension) — check
 for those by hand with `find panels -iname "*.png"` after running it.
+
+### A safety net for manually-dropped PNGs
+
+If you ever drop page images straight into `panels/issue-NN/` by hand
+(bypassing `publish_issue.py` entirely, the way Issue 2 got its first
+draft), there's a git pre-commit hook that catches it: the moment you try
+to commit a `.png` under `panels/`, it runs the optimizer automatically,
+converts it to WebP, rewrites the manifest, and re-stages before the
+commit completes — you never end up committing a raw PNG by accident.
+
+It's not on by default (git hooks live outside the tracked repo, so every
+clone has to opt in once):
+
+```
+git config core.hooksPath githooks
+```
+
+Run that once per machine/clone and it's permanent from then on. Tested
+end-to-end (staged PNG → converted → committed as WebP; a commit with no
+PNGs passes through untouched, no delay).

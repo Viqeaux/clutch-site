@@ -1,0 +1,58 @@
+#!/bin/sh
+# Pre-commit hook: auto-converts any staged PNG under panels/issue-*/ to
+# WebP before the commit completes, so a manually-dropped PNG never
+# accidentally ends up committed to the live site - no matter how it got
+# there (publish_issue.py already defaults to WebP; this catches anything
+# placed by hand instead).
+#
+# Not installed by default - git hooks live outside the tracked repo, so
+# every clone needs to opt in once with:
+#   git config core.hooksPath githooks
+# (See README.md for the full explanation.)
+
+STAGED_PNGS=$(git diff --cached --name-only --diff-filter=ACM -- 'panels/issue-*/*.png' 'panels/issue-*/*.PNG')
+
+if [ -z "$STAGED_PNGS" ]; then
+  exit 0
+fi
+
+echo "[pre-commit] Staged PNG(s) found under panels/ - converting to WebP first:"
+echo "$STAGED_PNGS" | sed 's/^/  /'
+
+OPTIMIZER=""
+if [ -n "$CLUTCH_AUTOMATION_DIR" ] && [ -f "$CLUTCH_AUTOMATION_DIR/optimize_published_panels.py" ]; then
+  OPTIMIZER="$CLUTCH_AUTOMATION_DIR/optimize_published_panels.py"
+else
+  for candidate in \
+    "../../GPT Image Generator/clutch_automation/optimize_published_panels.py" \
+    "../GPT Image Generator/clutch_automation/optimize_published_panels.py"
+  do
+    if [ -f "$candidate" ]; then
+      OPTIMIZER="$candidate"
+      break
+    fi
+  done
+fi
+
+if [ -z "$OPTIMIZER" ]; then
+  echo "[pre-commit] WARNING: couldn't find optimize_published_panels.py - committing the"
+  echo "[pre-commit] PNG(s) as-is. Run the optimizer by hand afterward, or set"
+  echo "[pre-commit] CLUTCH_AUTOMATION_DIR if your folders aren't laid out the same way."
+  exit 0
+fi
+
+ISSUE_NUMS=$(echo "$STAGED_PNGS" | grep -o 'issue-[0-9]\{1,\}' | sed 's/issue-0*//' | sort -u)
+
+for n in $ISSUE_NUMS; do
+  echo "[pre-commit] Converting issue $n..."
+  python "$OPTIMIZER" --issue "$n" --site-dir "$(pwd)" --from-hook
+  if [ $? -ne 0 ]; then
+    echo "[pre-commit] ERROR: conversion failed for issue $n - aborting commit."
+    echo "[pre-commit] Nothing was committed; your staged changes are untouched."
+    exit 1
+  fi
+done
+
+git add -- panels/
+echo "[pre-commit] Done - converted file(s) re-staged, proceeding with commit."
+exit 0
