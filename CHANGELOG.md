@@ -5,6 +5,18 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.1.3] - 2026-08-02
+
+### Removed
+- The Cloudflare Worker Basic Auth gate for `/toolkit` (`worker.js`,
+  `wrangler.toml`, `.dev.vars`, `.assetsignore`) — it stopped doing
+  anything once hosting moved to Puck, since Cloudflare Workers is no
+  longer what serves the site. Confirmed dead (a plain `200`, no login
+  prompt) before removing rather than leaving non-functional security
+  code in place. `/toolkit` is currently unprotected except for a
+  `noindex, nofollow` meta tag; real access control, if wanted again, is
+  a server-side conversation with Aaron.
+
 ## [1.1.2] - 2026-08-02
 
 ### Fixed

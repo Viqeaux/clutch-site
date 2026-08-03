@@ -11,9 +11,8 @@
 
     The toolkit bundle itself stays untouched by this: it's copied
     wholesale as a self-contained offline bundle, exactly as it's
-    authored. This script does not read or modify anything inside it, and
-    does not touch the Basic Auth gate protecting /toolkit/* - that's
-    configured via `wrangler secret put TOOLKIT_PASSWORD` (see README.md).
+    authored. This script does not read or modify anything inside it.
+    Note: /toolkit is not currently password-gated (see README.md).
 
 .PARAMETER SourceDir
     Path to the DM Toolkit Folder. Defaults to

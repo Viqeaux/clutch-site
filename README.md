@@ -130,41 +130,25 @@ whatever happened to be sitting in the folder last. Run with `-DryRun`
 first to preview, `-SourceDir` if that folder isn't in its usual place, or
 `-SkipPull` to sync whatever's on disk right now without pulling first.
 
-### It's gated behind a password (not Cloudflare Access)
+### It's currently not password-gated
 
-`/toolkit` is protected by HTTP Basic Auth, enforced server-side in
-`worker.js` — the browser's native login prompt, one shared
-username/password. The password is never shipped to the browser (unlike a
-JS-based prompt, there's nothing to find by viewing page source), but it's
-also not per-person and there's no login audit trail. Good enough to keep
-this off search engines and out of randoms' hands; not meant to withstand
-a determined, targeted attacker. (Cloudflare Access — real per-person
-login — was the original plan, but it wanted a credit card on file even
-for the free tier, so this is the no-cost alternative.)
+`/toolkit` used to be protected by HTTP Basic Auth enforced in a
+Cloudflare Worker (`worker.js` + `wrangler.toml`), from when the site was
+deployed as a Cloudflare Worker. That whole mechanism only worked because
+Cloudflare Workers was the thing actually serving the site — now that
+hosting has moved to Puck (see [`deploy.ps1`](deploy.ps1) and the
+"Updating the live site" section below), Cloudflare isn't in the request
+path anymore, so that gate wasn't doing anything — confirmed by
+`/toolkit` returning a plain `200` with no login prompt. Removed rather
+than left in place quietly not working.
 
-**One-time setup**, from this folder, after `wrangler login`:
-
-```
-wrangler secret put TOOLKIT_PASSWORD
-```
-
-It'll prompt you to type the real password directly into your terminal —
-it's stored on Cloudflare's side and never written into this repo. The
-username is hardcoded in `worker.js` as `clutch` (not a secret — change it
-there directly if you want something else).
-
-`wrangler.toml` has `run_worker_first = ["/toolkit", "/toolkit/*"]` so only
-requests to those paths run through `worker.js` at all — every other page
-on the site is still served directly as a static file, same as before.
-
-If the secret is ever unset (fresh deploy before running the command
-above), the toolkit fails closed with a 500 rather than serving the
-content unprotected — but set it before your first deploy of `toolkit/`
-so there's no window where it's reachable at all.
-
-For local testing only: `.dev.vars` (gitignored, never deployed) holds a
-throwaway password for `wrangler dev` — that file is not the real secret
-and doesn't need to match it.
+The only protection right now is `<meta name="robots" content="noindex,
+nofollow">` in `toolkit/index.html`, which keeps it out of search engines
+but does **not** stop anyone with the direct URL from opening it. If this
+needs real access control again, that's a server-side conversation with
+Aaron (e.g. HTTP Basic Auth in the Puck web server's config for the
+`/toolkit` path) rather than anything this repo can enforce on its own
+now that it's just static files being served by someone else's server.
 
 ## Reader
 
