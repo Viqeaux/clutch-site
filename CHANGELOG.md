@@ -5,6 +5,17 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.1.0] - 2026-08-02
+
+### Added
+- `deploy.ps1` — deploys the site to Puck over SSH. Refuses to run unless
+  the working tree is clean and `HEAD` is exactly on a git tag (so it's
+  not possible to deploy something that wasn't versioned first), exports
+  exactly the git-tracked files at that commit via `git archive`, pushes
+  the commit/tags to GitHub, ships the archive to Puck, and checks the
+  live site's `/VERSION` afterward to confirm what landed matches what
+  was sent.
+
 ## [1.0.0] - 2026-08-02
 
 Baseline release — the site as it stood when formal versioning started.
