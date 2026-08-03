@@ -5,6 +5,14 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.1.2] - 2026-08-02
+
+### Fixed
+- `deploy.ps1`'s post-deploy `/VERSION` check crashed instead of verifying,
+  since `Invoke-WebRequest -UseBasicParsing`'s `.Content` came back as raw
+  bytes rather than a string on this PowerShell version. Now decodes
+  either shape instead of assuming it's always a string.
+
 ## [1.1.1] - 2026-08-02
 
 ### Fixed

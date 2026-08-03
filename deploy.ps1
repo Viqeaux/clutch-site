@@ -124,7 +124,15 @@ Write-Host "[DEPLOY] Sent $tag to $RemoteHost."
 if (-not $SkipVerify) {
     Write-Host "[DEPLOY] Verifying live /VERSION..."
     try {
-        $liveVersion = (Invoke-WebRequest -Uri "$SiteUrl/VERSION" -UseBasicParsing).Content.Trim()
+        # -UseBasicParsing's .Content can come back as a raw byte array
+        # instead of a string depending on the response's content type -
+        # handle both rather than assuming .Content is always a string.
+        $response = Invoke-WebRequest -Uri "$SiteUrl/VERSION" -UseBasicParsing
+        if ($response.Content -is [byte[]]) {
+            $liveVersion = [System.Text.Encoding]::UTF8.GetString($response.Content).Trim()
+        } else {
+            $liveVersion = $response.Content.Trim()
+        }
         if ($tag -eq "v$liveVersion" -or $tag -eq $liveVersion) {
             Write-Host "[DEPLOY] Confirmed: $SiteUrl/VERSION reports '$liveVersion' - matches $tag."
         } else {
