@@ -5,6 +5,16 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.1.1] - 2026-08-02
+
+### Fixed
+- `deploy.ps1` extraction failed on Puck when it hit `toolkit/assets/`
+  subfolders owned by a different collaborator account (`matt`) — `tar`
+  can't restore timestamps on files it doesn't own as a non-root user,
+  even though it can still write their contents fine. Added `-m` so tar
+  stops trying to restore timestamps at all, since it doesn't matter for
+  deployed site files.
+
 ## [1.1.0] - 2026-08-02
 
 ### Added

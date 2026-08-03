@@ -109,7 +109,13 @@ scp $tempTar "${remote}:/tmp/clutch-site-deploy.tar"
 if ($LASTEXITCODE -ne 0) { Write-Error "scp failed"; exit 1 }
 
 Write-Host "[DEPLOY] Extracting into $RemotePath on $RemoteHost ..."
-ssh $remote "tar -xf /tmp/clutch-site-deploy.tar -C $RemotePath && rm -f /tmp/clutch-site-deploy.tar"
+# -m (--touch) skips restoring original timestamps: some folders under
+# toolkit/assets/ are owned by a different collaborator's account (matt),
+# and only a file's owner (or root) can call utime() on it - a non-root
+# `chad` extracting on top of them can still write the file contents fine,
+# it just can't touch their mtime. Without -m, tar exits nonzero on that
+# even though every file extracted correctly.
+ssh $remote "tar -xmf /tmp/clutch-site-deploy.tar -C $RemotePath && rm -f /tmp/clutch-site-deploy.tar"
 if ($LASTEXITCODE -ne 0) { Write-Error "Remote extract failed"; exit 1 }
 
 Remove-Item -LiteralPath $tempTar -Force -ErrorAction SilentlyContinue
