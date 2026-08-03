@@ -1,6 +1,10 @@
 # The Clutch — site
 
-Live at: https://clutch-site.theclutchcomic.workers.dev
+Deployment is moving off Cloudflare/GitHub to a new server (Puck) as of
+2026-07 — the "Updating the live site" section below describes the old
+GitHub->Cloudflare flow, which is being retired. Check with whoever's
+handling the Puck side for the current upload step if it's not documented
+here yet.
 
 ## To view it on your computer
 
@@ -19,9 +23,9 @@ python publish_issue.py --issue 10
 ```
 
 from `clutch_automation/`. It resizes the pages, writes `manifest.js`, adds
-the entry to `data/issues.js` (the step everyone used to forget), copies any
-updated character portraits, and stages everything with `git add` in this
-repo — but does not commit or push, so you can review the art first. See
+the entry to `data/issues.js` (the step everyone used to forget), and copies
+any updated character portraits — all locally in this folder, nothing gets
+deployed automatically, so you can review the art before uploading it. See
 `clutch_automation/README.md` for details.
 
 ## To add a new issue (manual)
@@ -167,6 +171,34 @@ and doesn't need to match it.
 Issue pages show as a click-through grid; clicking a page opens it in a
 full-screen lightbox with page-flip animation between pages, pinch/scroll/
 double-click zoom, and drag-to-pan while zoomed in.
+
+## Versioning
+
+This site uses [semantic versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`:
+
+- **MAJOR** — big structural changes (a redesign, a hosting pivot like the
+  Puck move, restructuring how issues/campaigns work).
+- **MINOR** — new features or content sections (a new issue, a new page, a
+  new tool like the Toolkit or Party Tracker).
+- **PATCH** — small fixes and tweaks that don't add anything new.
+
+The current version lives in [`VERSION`](VERSION) (a single line, e.g.
+`1.0.0`) and every release is written up in [`CHANGELOG.md`](CHANGELOG.md).
+
+**To cut a new release**, once your changes are committed and ready to go
+out:
+
+1. Add an entry to the top of `CHANGELOG.md` under a new `## [x.y.z] -
+   YYYY-MM-DD` heading, describing what changed.
+2. Update `VERSION` to match.
+3. Commit both together: `git commit -am "Release vX.Y.Z"`.
+4. Tag that commit: `git tag vX.Y.Z`.
+5. Deploy that exact commit (see below) — so whatever's live always
+   corresponds to a tag you can look up later with `git tag -l` or
+   `git show vX.Y.Z`.
+
+Push tags along with your branch so GitHub has them too:
+`git push origin main --tags`.
 
 ## Updating the live site
 

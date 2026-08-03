@@ -1,0 +1,33 @@
+# Changelog
+
+All notable changes to this site are recorded here. Format loosely follows
+[Keep a Changelog](https://keepachangelog.com/); versions follow
+[Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
+changes, MINOR for new features or content sections, PATCH for small fixes.
+
+## [1.0.0] - 2026-08-02
+
+Baseline release — the site as it stood when formal versioning started.
+
+### Added
+- Comic reader: issue archive grid, full-screen page-flip lightbox with
+  pinch/scroll/double-click zoom and drag-to-pan.
+- Character pages pulling live stats from the party's Google Sheet, with a
+  saved-snapshot fallback when that fetch isn't available.
+- Canonical `data/character-art-notes.js` and `data/world-bible.js` —
+  shared source of truth between this site and the `clutch_automation`
+  image-generation pipeline.
+- DM Toolkit hosted at `/toolkit`, gated behind HTTP Basic Auth, with a
+  back-link wrapper to return to the main site.
+- Cloudflare Web Analytics beacon.
+- Automated issue publishing (`publish_issue.py`) and a git pre-commit
+  hook that auto-converts any manually-dropped PNGs under `panels/` to
+  WebP before they're committed.
+
+### Changed
+- All previously-published issue art converted from PNG to WebP for
+  smaller downloads.
+
+### Fixed
+- Cover-image filename case sensitivity, which only showed up under real
+  case-sensitive web hosting (not local Windows testing).
