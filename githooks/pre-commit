@@ -1,6 +1,6 @@
 #!/bin/sh
-# Pre-commit hook: auto-converts any staged PNG under panels/issue-*/ to
-# WebP before the commit completes, so a manually-dropped PNG never
+# Pre-commit hook: auto-converts any staged PNG under panels/<campaign>/issue-*/
+# to WebP before the commit completes, so a manually-dropped PNG never
 # accidentally ends up committed to the live site - no matter how it got
 # there (publish_issue.py already defaults to WebP; this catches anything
 # placed by hand instead).
@@ -10,7 +10,7 @@
 #   git config core.hooksPath githooks
 # (See README.md for the full explanation.)
 
-STAGED_PNGS=$(git diff --cached --name-only --diff-filter=ACM -- 'panels/issue-*/*.png' 'panels/issue-*/*.PNG')
+STAGED_PNGS=$(git diff --cached --name-only --diff-filter=ACM -- 'panels/*/issue-*/*.png' 'panels/*/issue-*/*.PNG')
 
 if [ -z "$STAGED_PNGS" ]; then
   exit 0

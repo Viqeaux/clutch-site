@@ -11,68 +11,86 @@
 // "past". Keep issue "number" values unique and increasing across every
 // campaign (don't restart at 1) — the reader page looks issues up by
 // number alone.
+//
+// Each issue's "folder" is a path under panels/, campaign-scoped:
+// panels/<campaign id>/issue-NN/ — e.g. "expedition-barrier-peaks/issue-01".
+// publish_issue.py builds this automatically from whichever campaign
+// you're publishing into; if adding an issue by hand, match the pattern.
 window.CLUTCH_DATA = {
   "series": "The Clutch",
   "arc": "Tales from the Table",
   "campaigns": [
     {
+      "id": "journey-rod-of-seven-parts",
+      "name": "Journey of the Rod of Seven Parts",
+      "status": "active",
+      "issues": [
+        {
+          "id": 10,
+          "number": 10,
+          "title": "Issue 10",
+          "folder": "journey-rod-of-seven-parts/issue-10"
+        }
+      ]
+    },
+    {
       "id": "expedition-barrier-peaks",
       "name": "Expedition to the Barrier Peaks",
-      "status": "active",
+      "status": "past",
       "issues": [
         {
           "id": 1,
           "number": 1,
           "title": "Issue 1",
-          "folder": "issue-01"
+          "folder": "expedition-barrier-peaks/issue-01"
         },
         {
           "id": 2,
           "number": 2,
           "title": "Issue 2",
-          "folder": "issue-02"
+          "folder": "expedition-barrier-peaks/issue-02"
         },
         {
           "id": 3,
           "number": 3,
           "title": "Issue 3",
-          "folder": "issue-03"
+          "folder": "expedition-barrier-peaks/issue-03"
         },
         {
           "id": 4,
           "number": 4,
           "title": "Issue 4",
-          "folder": "issue-04"
+          "folder": "expedition-barrier-peaks/issue-04"
         },
         {
           "id": 5,
           "number": 5,
           "title": "Issue 5",
-          "folder": "issue-05"
+          "folder": "expedition-barrier-peaks/issue-05"
         },
         {
           "id": 6,
           "number": 6,
           "title": "Issue 6",
-          "folder": "issue-06"
+          "folder": "expedition-barrier-peaks/issue-06"
         },
         {
           "id": 7,
           "number": 7,
           "title": "Issue 7",
-          "folder": "issue-07"
+          "folder": "expedition-barrier-peaks/issue-07"
         },
         {
           "id": 8,
           "number": 8,
           "title": "Issue 8",
-          "folder": "issue-08"
+          "folder": "expedition-barrier-peaks/issue-08"
         },
         {
           "id": 9,
           "number": 9,
           "title": "Issue 9",
-          "folder": "issue-09"
+          "folder": "expedition-barrier-peaks/issue-09"
         }
       ]
     }

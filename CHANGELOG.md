@@ -5,6 +5,25 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.2.0] - 2026-08-04
+
+### Added
+- New campaign: **Journey of the Rod of Seven Parts**, now the active
+  campaign. Issue 10 published (cover + 29 pages), converted from raw
+  PNG to WebP (94 MB -> 14 MB, 85% smaller).
+
+### Changed
+- **Expedition to the Barrier Peaks** archived (`status: "past"`) — its
+  9 issues are unaffected, just collapsed into a side-rail tab now.
+- Panel folders are now campaign-scoped:
+  `panels/<campaign-id>/issue-NN/` instead of a flat `panels/issue-NN/`.
+  All 9 existing issues moved under `panels/expedition-barrier-peaks/`;
+  `data/issues.js`'s `"folder"` values updated to match. The site's own
+  JS needed no changes (folder was already treated as an opaque path);
+  `publish_issue.py`, `optimize_published_panels.py`, and the
+  `githooks/pre-commit` PNG-catch pattern were all updated to know about
+  the nested structure.
+
 ## [1.1.3] - 2026-08-02
 
 ### Removed

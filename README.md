@@ -30,12 +30,15 @@ deployed automatically, so you can review the art before uploading it. See
 
 ## To add a new issue (manual)
 
-Say you're adding Issue 10 by hand:
+Say you're adding Issue 10 by hand, into the active campaign
+`journey-rod-of-seven-parts`:
 
-1. Create `panels/issue-10/` and drop the page images in (PNG or JPG),
-   named so they sort in order — `p1.png`, `p2.png`, `p3.png`... A file
-   named `cover` (`.jpg`/`.jpeg`/`.png`/`.webp`) is optional and becomes
-   the thumbnail on the archive page.
+1. Create `panels/journey-rod-of-seven-parts/issue-10/` and drop the page
+   images in (PNG or JPG), named so they sort in order — `p1.png`,
+   `p2.png`, `p3.png`... A file named `cover` (`.jpg`/`.jpeg`/`.png`/
+   `.webp`) is optional and becomes the thumbnail on the archive page.
+   The folder always nests under the campaign it belongs to — see "To
+   rename an issue's title, or start a new campaign" below for that id.
 
 2. In that same folder, create `manifest.js`:
 
@@ -60,7 +63,7 @@ Say you're adding Issue 10 by hand:
    the active campaign's `issues` array:
 
    ```
-   { "id": 10, "number": 10, "title": "Issue 10", "folder": "issue-10" }
+   { "id": 10, "number": 10, "title": "Issue 10", "folder": "journey-rod-of-seven-parts/issue-10" }
    ```
 
    The manifest alone isn't enough — this is the part that actually makes
@@ -212,7 +215,7 @@ WebP now — smaller than JPG at equivalent quality, universal browser
 support). If you ever need to retroactively convert issues that were
 published before this existed (or as raw PNG for any other reason), run
 `clutch_automation/optimize_published_panels.py` — it converts every
-`panels/issue-*/` folder still holding PNGs, rewrites each `manifest.js`
+`panels/*/issue-*/` folder still holding PNGs, rewrites each `manifest.js`
 to match, and stages the change (same "review before you push" pattern as
 everything else here). One thing it can't see: cover images some issues
 reference outside the manifest (found by `js/campaign-shared.js`'s
@@ -221,7 +224,7 @@ for those by hand with `find panels -iname "*.png"` after running it.
 
 ### A safety net for manually-dropped PNGs
 
-If you ever drop page images straight into `panels/issue-NN/` by hand
+If you ever drop page images straight into `panels/<campaign-id>/issue-NN/` by hand
 (bypassing `publish_issue.py` entirely, the way Issue 2 got its first
 draft), there's a git pre-commit hook that catches it: the moment you try
 to commit a `.png` under `panels/`, it runs the optimizer automatically,
