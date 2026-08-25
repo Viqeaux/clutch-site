@@ -5,6 +5,15 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.5.0] - 2026-08-25
+
+### Added
+- Issue 13 published to **Journey of the Rod of Seven Parts** (cover + 20
+  pages, numbered p2-p21 — no p1 in this issue), converted from PNG to
+  WebP. Published manually rather than via `publish_issue.py`, since the
+  source files used the site's own `Cover`/`pN` naming instead of the
+  tool's `PageNN_assembled.png` convention.
+
 ## [1.4.0] - 2026-08-18
 
 ### Added
