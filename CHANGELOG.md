@@ -5,6 +5,16 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.7.0] - 2026-09-15
+
+### Added
+- Issue 15 published to **Journey of the Rod of Seven Parts** (cover +
+  recap page + 25 pages, p1-p25 complete), converted from PNG to WebP.
+  This issue includes a "story so far" recap page (source filename
+  `d1.png`, kept as `d1.webp`), placed right after the cover — same
+  recap-page pattern used in earlier issues. Published manually, same
+  as issues 13 and 14.
+
 ## [1.6.0] - 2026-09-11
 
 ### Added

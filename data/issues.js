@@ -54,6 +54,12 @@ window.CLUTCH_DATA = {
           "number": 14,
           "title": "Issue 14",
           "folder": "journey-rod-of-seven-parts/issue-14"
+        },
+        {
+          "id": 15,
+          "number": 15,
+          "title": "Issue 15",
+          "folder": "journey-rod-of-seven-parts/issue-15"
         }
       ]
     },
