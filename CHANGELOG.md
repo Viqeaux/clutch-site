@@ -5,6 +5,11 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [1.7.1] - 2026-09-15
+
+### Fixed
+- Issue 15, page 3 replaced with a corrected version of the art.
+
 ## [1.7.0] - 2026-09-15
 
 ### Added
