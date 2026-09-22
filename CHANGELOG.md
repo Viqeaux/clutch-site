@@ -5,6 +5,35 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.1.0] - 2026-09-22
+
+### Fixed
+- Panel-composed pages no longer show large empty bars above/below their
+  panels. The layout previously fit panels into a fixed print-page canvas
+  (matching the generation pipeline's own flattened-page dimensions) and
+  vertically centered the result, leaving parchment whitespace whenever a
+  page's panels didn't fill that height — most pages, since panel mixes
+  vary a lot page to page. Pages are now sized to fit their own panels
+  exactly, margin and gutters included and nothing more.
+- Fixed a CSS sizing bug (only affecting panel-composed pages, not the
+  flattened ones every issue through 15 uses) where a wide/landscape-heavy
+  page's panel grid could render squashed — `max-width` was clipping the
+  page's width without correspondingly shrinking its height, since the div
+  had an explicit height instead of leaving both dimensions to be resolved
+  together from its aspect ratio. Panel pages are now sized explicitly in
+  JS (mirroring what `object-fit: contain` already does for a plain image)
+  instead of relying on that sizing combination.
+
+### Added
+- Panels on a panel-composed page are now clickable (and keyboard-
+  activatable) — click one to zoom it to fill the reader, click again to
+  zoom back out. Fixed a related bug this surfaced: `setPointerCapture`
+  was being called on every pointer-down regardless of whether a pan was
+  actually starting, which retargeted the browser's synthesized `click`
+  event away from the panel that was actually tapped once already zoomed
+  in, silently breaking the zoom-back-out tap. Tap detection is now done
+  by hand from pointerdown/pointerup instead of relying on `click`.
+
 ## [2.0.0] - 2026-09-22
 
 ### Added

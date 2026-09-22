@@ -1121,9 +1121,9 @@ a:focus-visible, button:focus-visible {
 }
 
 .flip-page div.page-content {
+  /* see the matching .zoom-wrap div.page-content rule for why there's no
+     explicit width/height here. */
   aspect-ratio: 2048 / 3072;
-  height: 100%;
-  width: auto;
 }
 
 .flip-page::after {
@@ -1193,12 +1193,15 @@ a:focus-visible, button:focus-visible {
 }
 
 .zoom-wrap div.page-content {
-  /* a <div> panel-page has no intrinsic size like <img> does, so give it
-     the canvas aspect ratio the panel layout was computed against; the
-     max-width/max-height above then caps it exactly like an image would. */
+  /* a <div> panel-page has no intrinsic size like <img> does, so give it an
+     aspect ratio (each page sets its own actual ratio inline, sized to fit
+     its panels — see js/reader.js's pageContentHTML). Deliberately no
+     explicit width/height here: with both left auto, the max-width/
+     max-height above are enough for the browser to size this exactly like
+     object-fit:contain would size an <img> — an explicit height (as this
+     rule used to set) forces max-width to clip the box without shrinking
+     the height to match, distorting wide (landscape-heavy) pages. */
   aspect-ratio: 2048 / 3072;
-  height: 100%;
-  width: auto;
 }
 
 .reader-stage.zoomed .zoom-wrap .page-content { cursor: grab; }
@@ -1215,6 +1218,13 @@ a:focus-visible, button:focus-visible {
   box-sizing: border-box;
   border: 2px solid #141414;
   overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+
+.panel-page .panel-item:hover,
+.panel-page .panel-item:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--gold-bright, #c9a961);
+  outline: none;
 }
 
 .panel-page .panel-item img {
