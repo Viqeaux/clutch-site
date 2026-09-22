@@ -5,6 +5,20 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.1.2] - 2026-09-22
+
+### Changed
+- The homepage's big "current campaign" cover now links straight into the
+  latest issue's reader instead of that campaign's issue list — clicking
+  "the current issue" should open the current issue, not a list you then
+  have to click through again.
+
+### Added
+- A "View all issues →" link on the homepage under the current campaign's
+  name, so browsing that campaign's full issue list (previously only
+  reachable through the cover link this change repurposed) still has a
+  home.
+
 ## [2.1.1] - 2026-09-22
 
 ### Changed

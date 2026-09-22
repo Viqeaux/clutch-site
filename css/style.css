@@ -741,6 +741,23 @@ a:focus-visible, button:focus-visible {
   margin-top: 0.4rem;
 }
 
+.campaign-view-all {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.6rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.campaign-view-all:hover {
+  color: var(--gold-bright);
+  border-bottom-color: var(--gold-bright);
+}
+
 .campaign-heading {
   text-align: center;
   margin: 1rem 0 1.8rem;

@@ -48,7 +48,7 @@ async function findCampaignCover(campaign) {
   const newestFirst = [...campaign.issues].sort((a, b) => b.number - a.number);
   for (const issue of newestFirst) {
     const src = await findCover(issue.folder);
-    if (src) return src;
+    if (src) return { issue, coverSrc: src };
   }
   return null;
 }
