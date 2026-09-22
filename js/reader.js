@@ -244,6 +244,7 @@ function computePanelLayout(panels) {
     if (!el) return;
     el.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
     stage.classList.toggle('zoomed', scale > 1.001);
+    stage.classList.toggle('panel-focused', !!focusedPanel);
     const resetBtn = stage.querySelector('#zoom-reset');
     if (resetBtn) resetBtn.textContent = `${Math.round(scale * 100)}%`;
   }
@@ -258,7 +259,11 @@ function computePanelLayout(panels) {
     offsetX = cx - (cx - offsetX) * ratio;
     offsetY = cy - (cy - offsetY) * ratio;
     scale = newScale;
-    if (scale <= MIN_SCALE) { offsetX = 0; offsetY = 0; }
+    // Any path back down to 1x (wheel, pinch, the reset button, double-click
+    // toggle-out) exits panel-focused mode too — otherwise the stage-zones/
+    // arrow keys would keep navigating panels instead of pages even though
+    // the view looks like a normal, unzoomed full page again.
+    if (scale <= MIN_SCALE) { offsetX = 0; offsetY = 0; focusedPanel = null; }
     applyTransform();
   }
 
@@ -321,8 +326,29 @@ function computePanelLayout(panels) {
       focusedPanel = null;
       return;
     }
-    zoomToPanel(panelEl);
+    // Set before calling zoomToPanel(), not after — it calls applyTransform()
+    // internally, which reads focusedPanel to toggle the 'panel-focused'
+    // stage class. Setting it afterward left that class one click stale, so
+    // the very first zoom-in never actually enabled panel-to-panel nav.
     focusedPanel = panelEl;
+    zoomToPanel(panelEl);
+  }
+
+  // While a panel is focused, prev/next moves between that page's panels
+  // instead of between pages — and stops at the first/last panel rather
+  // than spilling over onto an adjacent page, per the reader's existing
+  // "panels only until you click out" behavior.
+  function navigatePanel(direction) {
+    if (!focusedPanel) return;
+    const zoomWrap = stage.querySelector('.zoom-wrap');
+    if (!zoomWrap) return;
+    const panelEls = Array.from(zoomWrap.querySelectorAll('.panel-item'));
+    const idx = panelEls.indexOf(focusedPanel);
+    if (idx === -1) return;
+    const nextIdx = idx + direction;
+    if (nextIdx < 0 || nextIdx >= panelEls.length) return;
+    focusedPanel = panelEls[nextIdx];
+    zoomToPanel(panelEls[nextIdx]);
   }
 
   function thumbSrc(entry) {
@@ -508,8 +534,12 @@ function computePanelLayout(panels) {
         <button type="button" class="zoom-btn" id="zoom-in" aria-label="Zoom in">+</button>
       </div>
     `;
-    stage.querySelector('.prev').addEventListener('click', () => goTo(current - 1));
-    stage.querySelector('.next').addEventListener('click', () => goTo(current + 1));
+    stage.querySelector('.prev').addEventListener('click', () => {
+      if (focusedPanel) navigatePanel(-1); else goTo(current - 1);
+    });
+    stage.querySelector('.next').addEventListener('click', () => {
+      if (focusedPanel) navigatePanel(1); else goTo(current + 1);
+    });
 
     const zoomWrap = stage.querySelector('.zoom-wrap');
     renderPageContentInto(zoomWrap);
@@ -613,8 +643,16 @@ function computePanelLayout(panels) {
   window.addEventListener('keydown', (e) => {
     if (overlay.hidden) return;
     if (e.key === 'Escape') { closeLightbox(); return; }
-    if (e.key === 'ArrowRight' || e.key === ' ') { if (scale <= 1.001) goTo(current + 1); return; }
-    if (e.key === 'ArrowLeft') { if (scale <= 1.001) goTo(current - 1); return; }
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      if (focusedPanel) navigatePanel(1);
+      else if (scale <= 1.001) goTo(current + 1);
+      return;
+    }
+    if (e.key === 'ArrowLeft') {
+      if (focusedPanel) navigatePanel(-1);
+      else if (scale <= 1.001) goTo(current - 1);
+      return;
+    }
     if (e.key === '+' || e.key === '=') { const c = stageCenter(); setZoom(scale * 1.4, c.x, c.y); }
     if (e.key === '-' || e.key === '_') { const c = stageCenter(); setZoom(scale / 1.4, c.x, c.y); }
     if (e.key === '0') { const c = stageCenter(); setZoom(1, c.x, c.y); }

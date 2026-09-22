@@ -1276,7 +1276,7 @@ a:focus-visible, button:focus-visible {
 .stage-zone.prev { left: 0; justify-content: flex-start; padding-left: 1rem; }
 .stage-zone.next { right: 0; justify-content: flex-end; padding-right: 1rem; }
 
-.reader-stage.zoomed .stage-zone {
+.reader-stage.zoomed:not(.panel-focused) .stage-zone {
   pointer-events: none;
   opacity: 0 !important;
 }

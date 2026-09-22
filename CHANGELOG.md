@@ -5,6 +5,22 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.1.3] - 2026-09-22
+
+### Added
+- While a panel is focused (zoomed in), the prev/next arrows and arrow
+  keys now step to the next/previous panel on that same page instead of
+  turning the page — and stop at the first/last panel rather than
+  spilling onto an adjacent page. Click the focused panel again (or the
+  zoom-reset button, or zoom/pan back out any other way) to return to
+  normal full-page view and page-to-page navigation.
+
+### Fixed
+- The very first click into a panel never actually enabled this panel-to-
+  panel navigation — `focusedPanel` was being set after the zoom call
+  that reads it to decide whether the prev/next controls should be
+  active, so they stayed in "turn the page" mode for one click too long.
+
 ## [2.1.2] - 2026-09-22
 
 ### Changed
