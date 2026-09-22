@@ -5,6 +5,35 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.0.0] - 2026-09-22
+
+### Added
+- **Panel-composed pages.** The reader (`js/reader.js`) can now build a page
+  from several separately-generated panel images at view time instead of
+  requiring one flattened page image, using the same row-packing layout
+  `assemble_page_local()` uses in the generation pipeline (`css/style.css`
+  gained the matching `.panel-page`/`.panel-item` rules). A `manifest.js`
+  page entry can now be either a plain filename (a flattened page, exactly
+  as before — every issue through 15 is untouched) or an object listing
+  panel images with their aspect ratios. All existing reader features (zoom,
+  pan, pinch, double-click zoom, page-flip animation) work on both kinds of
+  page. This is a going-forward capability only — issues 1-15 are not being
+  retrofitted.
+- Issue 16 published to **Journey of the Rod of Seven Parts** (cover + 24
+  pages, 121 individual panels) — the first issue published through the new
+  panel pipeline rather than flattened. No recap page this issue.
+- `clutch_automation/publish_issue_panels.py` — publishes an issue's raw
+  per-panel output (`PageNN_PanelMM.png` + `PageNN_prompts.md`, which
+  `generate_clutch.py` already writes) straight to the site as separate
+  WebP images and a panel-composed manifest, skipping the flatten/assemble
+  step entirely. A "Publish to site" button in `gui_app.py`'s panel review
+  screen wraps the same logic, so a flagged/regenerated panel can go live
+  immediately without reassembling its page.
+
+### Changed
+- Bumped to a major version since this changes how pages are structured
+  and published going forward, per this file's own versioning rule.
+
 ## [1.7.1] - 2026-09-15
 
 ### Fixed
