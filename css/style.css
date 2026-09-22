@@ -1209,14 +1209,14 @@ a:focus-visible, button:focus-visible {
 
 .panel-page {
   position: relative;
-  background: #f5f0eb;
+  background: var(--bg-void);
   overflow: hidden;
 }
 
 .panel-page .panel-item {
   position: absolute;
   box-sizing: border-box;
-  border: 2px solid #141414;
+  border: 1px solid rgba(201, 169, 97, 0.35);
   overflow: hidden;
   transition: box-shadow 0.15s ease;
 }

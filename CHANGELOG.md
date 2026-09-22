@@ -5,6 +5,15 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.1.1] - 2026-09-22
+
+### Changed
+- Panel-composed pages' background (the margin/gutter area around and
+  between panels) changed from parchment off-white to near-black
+  (`--bg-void`), matching the reader's own dark theme instead of standing
+  out against it. Panel borders switched from flat dark `#141414` to a
+  thin translucent gold to stay visible against the new dark background.
+
 ## [2.1.0] - 2026-09-22
 
 ### Fixed
