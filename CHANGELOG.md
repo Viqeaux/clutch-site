@@ -5,6 +5,15 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.1.4] - 2026-09-27
+
+### Added
+- Issue 17 published to **Journey of the Rod of Seven Parts** (cover + 25
+  pages, 132 individual panels), published through the panel pipeline.
+  Also added a "Publish to site" section to `clutch_automation/panels_gui.py`
+  (Panel Studio) matching the one already in `gui_app.py`, so publishing
+  doesn't require switching apps mid-review.
+
 ## [2.1.3] - 2026-09-22
 
 ### Added
