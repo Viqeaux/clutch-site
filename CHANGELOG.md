@@ -5,6 +5,12 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.3.1] - 2026-10-10
+
+### Fixed
+- `sitemap.xml` and `robots.txt` now point at the live domain,
+  `theclutch.quest`, instead of the old `workers.dev` address.
+
 ## [2.3.0] - 2026-10-10
 
 ### Added

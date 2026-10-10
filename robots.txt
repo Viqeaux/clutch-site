@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://clutch-site.theclutchcomic.workers.dev/sitemap.xml
+Sitemap: https://theclutch.quest/sitemap.xml
