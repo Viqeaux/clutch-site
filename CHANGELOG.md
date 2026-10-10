@@ -5,6 +5,15 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.3.0] - 2026-10-10
+
+### Added
+- **Style Gallery** page (`style-gallery.html`): 101 art styles we've tried
+  The Clutch in. Search and filter, click to enlarge, copy the prompt. Linked
+  from the wax-seal menu and the sitemap. Images were pulled out of the
+  original 33 MB single-file gallery into `style-gallery/*.webp` (~16 MB,
+  lazy-loaded).
+
 ## [2.2.0] - 2026-10-05
 
 ### Added
