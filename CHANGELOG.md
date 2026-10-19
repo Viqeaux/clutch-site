@@ -5,6 +5,11 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.5.0] - 2026-10-19
+
+### Added
+- Issue 19 ("Issue 19") published to the site, via Panel Studio's "Publish to site" button.
+
 ## [2.4.0] - 2026-10-18
 
 ### Added
