@@ -21,9 +21,22 @@ window.CLUTCH_DATA = {
   "arc": "Tales from the Table",
   "campaigns": [
     {
+      "id": "the-forgotten-identity",
+      "name": "The Forgotten Identity",
+      "status": "active",
+      "issues": [
+        {
+          "id": 19,
+          "number": 19,
+          "title": "The Forgotten Identity",
+          "folder": "the-forgotten-identity/issue-19"
+        }
+      ]
+    },
+    {
       "id": "journey-rod-of-seven-parts",
       "name": "Journey of the Rod of Seven Parts",
-      "status": "active",
+      "status": "past",
       "issues": [
         {
           "id": 10,
@@ -78,12 +91,6 @@ window.CLUTCH_DATA = {
           "number": 18,
           "title": "Issue 18",
           "folder": "journey-rod-of-seven-parts/issue-18"
-        },
-        {
-          "id": 19,
-          "number": 19,
-          "title": "The Forgotten Identity",
-          "folder": "journey-rod-of-seven-parts/issue-19"
         }
       ]
     },

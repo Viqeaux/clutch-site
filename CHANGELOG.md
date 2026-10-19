@@ -5,6 +5,18 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.6.0] - 2026-10-19
+
+### Added
+- New campaign: **The Forgotten Identity**, now the active campaign, starting
+  with Issue 19.
+
+### Changed
+- **Journey of the Rod of Seven Parts** archived (`status: "past"`); its
+  issues 10-18 are unaffected, just collapsed into a side-rail tab.
+- Issue 19's panels moved to `panels/the-forgotten-identity/issue-19/` to
+  match the campaign-scoped folder layout.
+
 ## [2.5.3] - 2026-10-19
 
 ### Changed
