@@ -82,7 +82,7 @@ window.CLUTCH_DATA = {
         {
           "id": 19,
           "number": 19,
-          "title": "Issue 19",
+          "title": "The Forgotten Identity",
           "folder": "journey-rod-of-seven-parts/issue-19"
         }
       ]

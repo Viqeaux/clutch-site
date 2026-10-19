@@ -5,6 +5,12 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.5.1] - 2026-10-19
+
+### Fixed
+- Issue 19's title restored to "The Forgotten Identity" (v2.5.0's re-publish
+  had reset it to "Issue 19").
+
 ## [2.5.0] - 2026-10-19
 
 ### Added
