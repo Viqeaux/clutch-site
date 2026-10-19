@@ -17,7 +17,7 @@ function getIssueNumberFromURL() {
 function checkImageExists(src) {
   return new Promise((resolve) => {
     const img = new Image();
-    img.onload = () => resolve(true);
+    img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
     img.onerror = () => resolve(false);
     img.src = src;
   });
@@ -61,10 +61,14 @@ function renderEmptyState(grid, issue) {
 
 const PANEL_CANVAS_W = 2048;
 const PANEL_CANVAS_H = 3072;
-const PANEL_MARGIN = 40;
-const PANEL_GUTTER = 20;
-const PANEL_MIN_W = 280;
+const PANEL_MARGIN = 24;
+const PANEL_GUTTER = 14;
+const PANEL_MIN_SLOT_W = 340;
 const PANEL_MAX_PER_ROW = 3;
+// How far a slot's shape may drift from its image's shape (1.2 = up to
+// ~17% of the image trimmed by object-fit:cover). Past that, the page is
+// left with a little empty space rather than cropping further.
+const PANEL_MAX_STRETCH = 1.2;
 
 const PANEL_ASPECT_RATIOS = {
   '16:9': [1024, 576],
@@ -81,83 +85,84 @@ function panelFlex(ratioKey) {
   return dims[0] / dims[1];
 }
 
-function packPanelRows(panels) {
-  const usableW = PANEL_CANVAS_W - 2 * PANEL_MARGIN;
-  const rows = [];
-  let row = [];
-
-  const rowHasRatio = (r, keys) => r.some((p) => keys.includes(p.ratio));
-
-  for (const panel of panels) {
-    const ratio = panel.ratio || '1:1';
-    const isFull = ratio === 'full';
-    const isWide = ratio === '16:9' || ratio === '21:9';
-
-    let forceNew = false;
-    if (row.length > 0) {
-      if (isFull) forceNew = true;
-      else if (rowHasRatio(row, ['full'])) forceNew = true;
-      else if (row.length >= PANEL_MAX_PER_ROW) forceNew = true;
-      else if (isWide && row.length >= 2) forceNew = true;
-      else if (rowHasRatio(row, ['16:9', '21:9']) && row.length >= 2) forceNew = true;
-      else {
-        const trial = row.concat([panel]);
-        const totalF = trial.reduce((s, p) => s + panelFlex(p.ratio || '1:1'), 0);
-        const n = trial.length;
-        const h = (usableW - (n - 1) * PANEL_GUTTER) / totalF;
-        const minF = Math.min(...trial.map((p) => panelFlex(p.ratio || '1:1')));
-        const minPanelW = minF * h;
-        if (minPanelW < PANEL_MIN_W) forceNew = true;
-      }
-    }
-
-    if (forceNew) {
-      rows.push(row);
-      row = [panel];
-    } else {
-      row.push(panel);
-    }
-  }
-  if (row.length > 0) rows.push(row);
-  return rows;
+// Real width/height of a panel's image when known (measured on load), else
+// the nominal shape its ratio key stands for. The nominal table is only
+// approximate — generated "16:9" panels are really 3:2, "full" are 2:3 —
+// so slots sized from it leave bars inside the slot.
+function panelAspect(panel, dims) {
+  const d = dims && dims.get(panel.src);
+  if (d && d.w && d.h) return d.w / d.h;
+  return panelFlex(panel.ratio || '1:1');
 }
 
-// Every page is the same fixed comic-page shape (PANEL_CANVAS_W x
-// PANEL_CANVAS_H, a standard 2:3 comic page), like assemble_page_local():
-// rows are shrunk (never enlarged) to fit inside the margins, and the block
-// of rows is centered both ways. Returns panel positions as percentages of
-// the full page, plus the page's aspect ratio for the caller to size the
-// container with.
-function computePanelLayout(panels) {
+// Every way to cut the panels, in reading order, into rows of up to
+// PANEL_MAX_PER_ROW — returned as arrays of row sizes.
+function rowSizeCombos(n) {
+  if (n === 0) return [[]];
+  const out = [];
+  for (let k = 1; k <= Math.min(PANEL_MAX_PER_ROW, n); k++) {
+    for (const rest of rowSizeCombos(n - k)) out.push([k, ...rest]);
+  }
+  return out;
+}
+
+// Picks the row grouping whose natural stacked height is closest to the
+// page's usable height, so rows only need a small stretch to fill the page.
+function bestRows(panels, aspects) {
   const usableW = PANEL_CANVAS_W - 2 * PANEL_MARGIN;
   const usableH = PANEL_CANVAS_H - 2 * PANEL_MARGIN;
-  const rows = packPanelRows(panels);
+  let best = null;
+  for (const sizes of rowSizeCombos(panels.length)) {
+    let i = 0;
+    let total = 0;
+    let penalty = 0;
+    const rows = sizes.map((k) => {
+      const idx = [];
+      for (let j = 0; j < k; j++) idx.push(i++);
+      const sumA = idx.reduce((sum, ix) => sum + aspects[ix], 0);
+      const h = (usableW - (k - 1) * PANEL_GUTTER) / sumA;
+      total += h;
+      const minW = Math.min(...idx.map((ix) => aspects[ix])) * h;
+      if (minW < PANEL_MIN_SLOT_W) penalty += (PANEL_MIN_SLOT_W - minW) / PANEL_MIN_SLOT_W * 2;
+      return { idx, h };
+    });
+    const avail = usableH - (rows.length - 1) * PANEL_GUTTER;
+    const s = avail / total;
+    const cost = Math.abs(Math.log(s)) + penalty;
+    if (!best || cost < best.cost) best = { cost, rows, s };
+  }
+  return best;
+}
 
-  const naturalHeights = rows.map((row) => {
-    const totalF = row.reduce((s, p) => s + panelFlex(p.ratio || '1:1'), 0);
-    const gutterTotal = (row.length - 1) * PANEL_GUTTER;
-    return (usableW - gutterTotal) / totalF;
-  });
+// Slots are custom-sized per page to fill the whole page up to a thin
+// margin: rows span the full width, and row heights are scaled so the rows
+// fill the full height. Each image is then cropped slightly (object-fit:
+// cover) to its slot, within PANEL_MAX_STRETCH. Returns slot positions as
+// percentages of the fixed 2:3 page, plus the page's aspect ratio.
+function computePanelLayout(panels, dims) {
+  const usableW = PANEL_CANVAS_W - 2 * PANEL_MARGIN;
+  const usableH = PANEL_CANVAS_H - 2 * PANEL_MARGIN;
+  const aspects = panels.map((p) => panelAspect(p, dims));
+  const { rows, s } = bestRows(panels, aspects);
 
-  const totalNatural = naturalHeights.reduce((s, h) => s + h, 0);
-  const availableH = usableH - (rows.length - 1) * PANEL_GUTTER;
-  const vScale = Math.min(1.0, totalNatural > 0 ? availableH / totalNatural : 1.0);
-  const rowHeights = naturalHeights.map((h) => Math.max(1, h * vScale));
+  const vScale = Math.min(s, PANEL_MAX_STRETCH);
+  const wScale = s < 1 / PANEL_MAX_STRETCH ? s * PANEL_MAX_STRETCH : 1;
 
-  const usedH = rowHeights.reduce((s, h) => s + h, 0) + (rows.length - 1) * PANEL_GUTTER;
+  const rowHeights = rows.map((r) => r.h * vScale);
+  const usedH = rowHeights.reduce((a, h) => a + h, 0) + (rows.length - 1) * PANEL_GUTTER;
   let y = PANEL_MARGIN + Math.max(0, (usableH - usedH) / 2);
 
   const layout = [];
   rows.forEach((row, ri) => {
     const rowH = rowHeights[ri];
-    const widths = row.map((p) => panelFlex(p.ratio || '1:1') * rowH);
-    const totalW = widths.reduce((s, w) => s + w, 0) + (row.length - 1) * PANEL_GUTTER;
+    const widths = row.idx.map((ix) => aspects[ix] * row.h * wScale);
+    const totalW = widths.reduce((a, w) => a + w, 0) + (row.idx.length - 1) * PANEL_GUTTER;
     let x = PANEL_MARGIN + Math.max(0, (usableW - totalW) / 2);
 
-    row.forEach((panel, pi) => {
+    row.idx.forEach((ix, pi) => {
       const w = widths[pi];
       layout.push({
-        src: panel.src,
+        src: panels[ix].src,
         leftPct: (x / PANEL_CANVAS_W) * 100,
         topPct: (y / PANEL_CANVAS_H) * 100,
         widthPct: (w / PANEL_CANVAS_W) * 100,
@@ -210,6 +215,8 @@ function computePanelLayout(panels) {
   // any that don't resolve to real images rather than showing a broken
   // tile for them. A panel page is skipped entirely if any one of its
   // panels is missing.
+  const panelDims = new Map();
+
   async function pageExists(entry) {
     if (typeof entry === 'string') {
       return checkImageExists(`panels/${issue.folder}/${entry}`);
@@ -218,6 +225,7 @@ function computePanelLayout(panels) {
       const results = await Promise.all(
         entry.panels.map(p => checkImageExists(`panels/${issue.folder}/${p.src}`))
       );
+      results.forEach((r, i) => { if (r) panelDims.set(entry.panels[i].src, r); });
       return results.length > 0 && results.every(Boolean);
     }
     return false;
@@ -251,6 +259,7 @@ function computePanelLayout(panels) {
     el.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
     stage.classList.toggle('zoomed', scale > 1.001);
     stage.classList.toggle('panel-focused', !!focusedPanel);
+    el.querySelectorAll('.panel-item').forEach((pe) => pe.classList.toggle('focused', pe === focusedPanel));
     const resetBtn = stage.querySelector('#zoom-reset');
     if (resetBtn) resetBtn.textContent = `${Math.round(scale * 100)}%`;
   }
@@ -370,7 +379,7 @@ function computePanelLayout(panels) {
     if (typeof entry === 'string') {
       return `<img class="page-content" src="panels/${issue.folder}/${entry}" alt="${alt}" draggable="false">`;
     }
-    const { layout, aspectW, aspectH } = computePanelLayout(entry.panels);
+    const { layout, aspectW, aspectH } = computePanelLayout(entry.panels, panelDims);
     const items = layout.map(l => `
       <div class="panel-item" tabindex="0" role="button" aria-label="View this panel closer"
            style="left:${l.leftPct}%;top:${l.topPct}%;width:${l.widthPct}%;height:${l.heightPct}%;"

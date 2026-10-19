@@ -5,6 +5,16 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.5.3] - 2026-10-19
+
+### Changed
+- Panel-built pages (Issues 16-19) now fill the whole page up to a thin
+  border. Each page's panels are grouped into rows and sized per page, using
+  the images' real shapes (generated "16:9" panels are really 3:2) instead of
+  nominal ratios, which removes the empty bars inside slots. Images are
+  trimmed slightly to fit (capped at about 17%); clicking into a panel shows
+  it whole.
+
 ## [2.5.2] - 2026-10-19
 
 ### Fixed
