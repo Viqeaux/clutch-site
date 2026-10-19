@@ -51,6 +51,31 @@ changes, MINOR for new features or content sections, PATCH for small fixes.
 ### Added
 - Issue 19 ("The Forgotten Identity") published to the site, via Panel Studio's "Publish to site" button.
 
+## [2.4.0] - 2026-10-19
+
+### Added
+- **Per-character prompts in the Style Gallery.** Opening a style now shows
+  a character picker (Wuck, Veyra Kass, Osric Pugh, Gingblat, Dagwood
+  Beefheart, Aureffkae) with a full prompt for each, in the format of the
+  hand-tested Gothic Pulp prompts. Style text lives in
+  `data/style-prompts-batch*.js`, characters and the prompt builder in
+  `data/style-prompts.js`, and the original Gothic Pulp prompts verbatim in
+  `data/style-prompts-016.js`. The old generic prompt is still available
+  for every style.
+- A "Download sample" button on each style, since the new prompts are used
+  with only the style's sample image.
+
+### Fixed
+- Many gallery images sat under the wrong style name (a few images were
+  missing from the original file, so everything after each gap moved up a
+  slot). Images are now realigned to the style they actually show, four
+  duplicate copies were dropped, and the four styles with no real sample
+  (004 Vintage American Comics, 014 Semi-Photorealistic Comic Art, 023
+  Shōjo Manga, 034 Practical Creature-Effects Realism) show a "Sample image
+  needed" placeholder. Image links carry `?v=2` so browsers don't show the
+  old images from cache.
+- Every gallery caption now describes its actual image.
+
 ## [2.3.1] - 2026-10-10
 
 ### Fixed
