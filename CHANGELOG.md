@@ -5,6 +5,14 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.5.2] - 2026-10-19
+
+### Fixed
+- Panel-built pages (Issues 16-19) are now all the standard 2:3 comic-page
+  shape. The reader had been sizing each page to fit its own panels, so page
+  shapes varied. Layout is back to a fixed page: rows shrink to fit and the
+  block is centered, like the original page assembler.
+
 ## [2.5.1] - 2026-10-19
 
 ### Fixed

@@ -60,6 +60,7 @@ function renderEmptyState(grid, issue) {
 // browser instead of being flattened into one image ahead of time.
 
 const PANEL_CANVAS_W = 2048;
+const PANEL_CANVAS_H = 3072;
 const PANEL_MARGIN = 40;
 const PANEL_GUTTER = 20;
 const PANEL_MIN_W = 280;
@@ -121,48 +122,53 @@ function packPanelRows(panels) {
   return rows;
 }
 
-// Unlike assemble_page_local() (which fits panels into a fixed print-page
-// canvas, letterboxing with parchment above/below whatever doesn't fill
-// it), the reader has no fixed page size to honor — so the page container
-// is sized to exactly fit its own panels, margin and gutters included, and
-// nothing more. Returns row-packed panel positions as percentages of that
-// content-sized box, plus the box's own aspect ratio (as width/height
-// canvas units) for the caller to size the container with.
+// Every page is the same fixed comic-page shape (PANEL_CANVAS_W x
+// PANEL_CANVAS_H, a standard 2:3 comic page), like assemble_page_local():
+// rows are shrunk (never enlarged) to fit inside the margins, and the block
+// of rows is centered both ways. Returns panel positions as percentages of
+// the full page, plus the page's aspect ratio for the caller to size the
+// container with.
 function computePanelLayout(panels) {
   const usableW = PANEL_CANVAS_W - 2 * PANEL_MARGIN;
+  const usableH = PANEL_CANVAS_H - 2 * PANEL_MARGIN;
   const rows = packPanelRows(panels);
 
-  const rowHeights = rows.map((row) => {
+  const naturalHeights = rows.map((row) => {
     const totalF = row.reduce((s, p) => s + panelFlex(p.ratio || '1:1'), 0);
     const gutterTotal = (row.length - 1) * PANEL_GUTTER;
     return (usableW - gutterTotal) / totalF;
   });
 
-  const contentH = rowHeights.reduce((s, h) => s + h, 0) + (rows.length - 1) * PANEL_GUTTER;
-  const canvasH = contentH + 2 * PANEL_MARGIN;
+  const totalNatural = naturalHeights.reduce((s, h) => s + h, 0);
+  const availableH = usableH - (rows.length - 1) * PANEL_GUTTER;
+  const vScale = Math.min(1.0, totalNatural > 0 ? availableH / totalNatural : 1.0);
+  const rowHeights = naturalHeights.map((h) => Math.max(1, h * vScale));
+
+  const usedH = rowHeights.reduce((s, h) => s + h, 0) + (rows.length - 1) * PANEL_GUTTER;
+  let y = PANEL_MARGIN + Math.max(0, (usableH - usedH) / 2);
 
   const layout = [];
-  let y = PANEL_MARGIN;
   rows.forEach((row, ri) => {
     const rowH = rowHeights[ri];
     const widths = row.map((p) => panelFlex(p.ratio || '1:1') * rowH);
-    let x = PANEL_MARGIN;
+    const totalW = widths.reduce((s, w) => s + w, 0) + (row.length - 1) * PANEL_GUTTER;
+    let x = PANEL_MARGIN + Math.max(0, (usableW - totalW) / 2);
 
     row.forEach((panel, pi) => {
       const w = widths[pi];
       layout.push({
         src: panel.src,
         leftPct: (x / PANEL_CANVAS_W) * 100,
-        topPct: (y / canvasH) * 100,
+        topPct: (y / PANEL_CANVAS_H) * 100,
         widthPct: (w / PANEL_CANVAS_W) * 100,
-        heightPct: (rowH / canvasH) * 100,
+        heightPct: (rowH / PANEL_CANVAS_H) * 100,
       });
       x += w + PANEL_GUTTER;
     });
     y += rowH + PANEL_GUTTER;
   });
 
-  return { layout, aspectW: PANEL_CANVAS_W, aspectH: Math.max(1, Math.round(canvasH)) };
+  return { layout, aspectW: PANEL_CANVAS_W, aspectH: PANEL_CANVAS_H };
 }
 
 (async function init() {
