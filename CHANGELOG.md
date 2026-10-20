@@ -5,6 +5,16 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.8.0] - 2026-10-20
+
+### Added
+- Sample images for the last four Style Gallery styles (004 Vintage American
+  Comics, 014 Semi-Photorealistic Comic Art, 023 Shōjo Manga, 034 Practical
+  Creature-Effects Realism), recovered from the "DND 3.5 Comic Style
+  Options" PDFs, plus their per-character prompts in
+  `data/style-prompts-batch9.js`. Every style now has a sample and
+  character prompts.
+
 ## [2.7.0] - 2026-10-19
 
 ### Added
