@@ -5,6 +5,24 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.9.0] - 2026-10-20
+
+### Changed
+- Style Gallery prompts are now built entirely around the individual
+  character. The style sample is used only for the look (medium, line,
+  color, lighting, texture); the prompts now tell the model not to copy its
+  subject, pose, camera, composition, setting, or props. The pose, camera,
+  and background in every prompt come from the character, and
+  sample-specific scene details that had crept into the style text (koi in
+  the sky, cultists, an empty plaza, an airship workshop, inset panels, a
+  figure shrunk into a landscape, and so on) were removed. Styles where the
+  format is the style itself (stained-glass window, manuscript page, LEGO
+  diorama, tapestry, paper shadow box, isometric map, chibi/cel art on white,
+  framed prints) keep their format, with the character's setting inside.
+- The nine `data/style-prompts-batch*.js` files are consolidated into one
+  `data/style-prompts-styles.js`. The gallery's prompt scripts now load with
+  a `?v=` tag so returning visitors don't run stale cached copies.
+
 ## [2.8.1] - 2026-10-20
 
 ### Changed
