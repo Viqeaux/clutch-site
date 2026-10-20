@@ -5,6 +5,14 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.8.1] - 2026-10-20
+
+### Changed
+- Style Gallery 045 Romanticism has a new sample image: a wanderer facing
+  the viewer on a crag at a stormy sunset (the old one showed the figure
+  from behind). Its prompts were rewritten to match: the figure faces the
+  viewer, with warm sunset light, storm clouds, and a sea of fog.
+
 ## [2.8.0] - 2026-10-20
 
 ### Added
