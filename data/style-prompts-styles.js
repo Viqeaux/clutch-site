@@ -5271,5 +5271,58 @@ window.STYLE_PROMPT_STYLES = {
       "The character is recognizable."
     ],
     "directive": "Create a {style} of {name}. Match the woven threads, millefleur background, and border of the supplied sample image."
+  },
+  "102": {
+    "medium": "a surrealist oil painting",
+    "intro": "The finished character must look like a carefully painted surrealist oil: believable, finely rendered realism in which the setting follows the logic of dreams, with impossible spaces, unexpected transformations, distorted scale, and symbolic details under luminous, atmospheric light.",
+    "constructionTitle": "MANDATORY SURREALIST CONSTRUCTION",
+    "construction": [
+      "Carefully painted, believable realism: solid anatomy, convincing materials, and finely modeled light, so the impossible feels real.",
+      "The character's own setting bends into dream logic: fragments of it float, hang, or repeat; distances and scale are subtly wrong; architecture leads nowhere or opens onto somewhere else.",
+      "One or two unexpected transformations of the character's own costume or gear (for example, a cloak lining that holds a night sky, or a strap that turns to vine), while the item stays clearly recognizable.",
+      "Symbolic details woven quietly into the scene rather than crowding it.",
+      "Luminous, atmospheric light: clear, warm sunlight, soft hazy distance, and crisp cast shadows.",
+      "A bright, airy palette of sky blue, cream, warm ochre, and stone, with deep jewel accents.",
+      "Fine, textured oil brushwork with a visible canvas surface."
+    ],
+    "translation": {
+      "face": "a realistically painted, warmly lit face that stays fully human and recognizable",
+      "hair": "finely painted strands, lifted slightly by an impossible breeze",
+      "cloth": "finely painted fabric with believable folds, with at most one dreamlike transformation",
+      "leather": "worn, warmly lit painted leather",
+      "metal": "softly gleaming painted metal",
+      "gear": "painted realistically, each item still clearly identifiable",
+      "keep": "kept true to the character, within the bright, luminous palette"
+    },
+    "resemble": "a newly painted work by the same artist as the sample image",
+    "detailTitle": "DETAIL LEVEL: MATCH THE SAMPLE'S DREAMLIKE REALISM",
+    "detail": [
+      "Finely rendered figure and costume.",
+      "Impossible elements painted as convincingly as real ones.",
+      "Soft atmospheric depth.",
+      "Crisp light and shadow."
+    ],
+    "realismTitle": "OIL PAINT REALISM",
+    "realism": [
+      "Textured oil brushwork.",
+      "Luminous, natural light.",
+      "Atmospheric perspective.",
+      "Fine canvas texture."
+    ],
+    "avoid": "Avoid cartoon styling, flat color, outlines, glossy 3D rendering, photorealism, and chaotic clutter that hides the character.",
+    "compositionLabel": "Surrealist painting composition",
+    "negatives": [
+      "A photograph or 3D render of the character.",
+      "A cartoon or comic version of the character.",
+      "Anime, manga, or cartoon faces and proportions.",
+      "Transformations that make the character or their gear unrecognizable."
+    ],
+    "checks": [
+      "Immediately reads as a surrealist oil painting.",
+      "The setting follows dream logic, with impossible space or scale, painted convincingly.",
+      "The character and every key item are still clearly recognizable."
+    ],
+    "directive": "Create a {style} painting of {name}. Match the dreamlike realism, luminous light, and fine brushwork of the supplied sample image.",
+    "priority": "Prioritize the authentic surrealist look and recognizable character identity above all other considerations."
   }
 };

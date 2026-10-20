@@ -5,6 +5,15 @@ All notable changes to this site are recorded here. Format loosely follows
 [Semantic Versioning](https://semver.org/) — MAJOR for big structural/hosting
 changes, MINOR for new features or content sections, PATCH for small fixes.
 
+## [2.10.0] - 2026-10-20
+
+### Added
+- Style Gallery style **102 Surrealism** (sample from `Surrealism_Style.pdf`),
+  with per-character prompts: carefully painted realism where each
+  character's own setting follows dream logic, with impossible space and
+  scale, a recognizable dreamlike transformation of their gear, and
+  luminous light. Gallery counts updated to 102.
+
 ## [2.9.0] - 2026-10-20
 
 ### Changed
