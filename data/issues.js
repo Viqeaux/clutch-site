@@ -36,6 +36,12 @@ window.CLUTCH_DATA = {
           "number": 20,
           "title": "Issue 20",
           "folder": "the-forgotten-identity/issue-20"
+        },
+        {
+          "id": 21,
+          "number": 21,
+          "title": "Issue 21",
+          "folder": "the-forgotten-identity/issue-21"
         }
       ]
     },
